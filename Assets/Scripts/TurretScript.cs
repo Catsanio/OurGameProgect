@@ -7,17 +7,19 @@ public class TurretScript : MonoBehaviour
     public float rotationSpeed = 10f;
     public GameObject bulletPrefab;
     public Transform firePoint;
-    public float fireRate = 10f, bulletSpeed;
+    public float fireRate = 1f, bulletSpeed;
 
     private Transform player;
     private float fireCountdown = 0f;
 
     private void Start()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Запуск пострілів з моменту старту
         fireCountdown = 1f / fireRate;
+        InvokeRepeating("Shoot", 3f,1 / fireRate);
     }
 
     private void Update()
@@ -26,18 +28,18 @@ public class TurretScript : MonoBehaviour
         Vector2 direction = player.position - transform.position;
 
         // Обчислення кута обертання до гравця
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 180;
 
         // Обертання турелі до гравця
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        //Quaternion rotation = Quaternion.Euler(angle, Vector3.forward);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
 
         // Логіка пострілів
-        if (fireCountdown <= 0f)
-        {
-            Shoot();
-            fireCountdown = 1f / fireRate;
-        }
+        //if (fireCountdown <= 0f)
+        
+            //Shoot();
+            //fireCountdown = 1f / fireRate;
+        
 
         fireCountdown -= Time.deltaTime;
     }
