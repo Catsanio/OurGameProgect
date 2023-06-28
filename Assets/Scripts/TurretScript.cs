@@ -18,7 +18,7 @@ public class TurretScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Запуск пострілів з моменту старту
-        fireCountdown = 1f / fireRate;
+        fireCountdown = 10f / fireRate;
         InvokeRepeating("Shoot", 3f,1 / fireRate);
     }
 

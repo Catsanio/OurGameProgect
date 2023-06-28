@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class EnemyBrain : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemyBrain : MonoBehaviour
     public float moveSpeed = 3f;
 
     private Transform player;
+    public float Hp;
     private Rigidbody2D rb;
 
     private void Start()
@@ -23,5 +25,21 @@ public class EnemyBrain : MonoBehaviour
 
         // Рух ворога в напрямку гравця
         rb.velocity = direction.normalized * moveSpeed;
+        if (Hp >= 0)
+        {
+            //Destroy(Instantiate(EnemyDieAnimation), 1f);
+            Destroy(player);
+            Destroy(rb);
+
+        }
+    }
+    //Знімання хп при попадані кулі по ворогу
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "BulletFriend")
+        {
+            Hp--;
+            Destroy(collision.gameObject);
+        }
     }
 }
