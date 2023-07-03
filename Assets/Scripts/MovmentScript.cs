@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MovmentScript : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5f,health;
     public GameObject pickUpText;
     public Transform weaponPoint;
     private void Update()
