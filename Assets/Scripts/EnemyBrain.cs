@@ -29,21 +29,14 @@ public class EnemyBrain : MonoBehaviour
 
         // Рух ворога в напрямку гравця
         rb.velocity = direction.normalized * moveSpeed;
-        if (hp >= 0)
+        if (hp <= 0)
         {
-            //Destroy(Instantiate(EnemyDieAnimation), 1f);
+            Destroy(gameObject);
             
         }
     }
     //Знімання хп при попадані кулі по ворогу
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "BulletFriend")
-        {
-            hp--;
-            Destroy(collision.gameObject);
-        }
-    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
@@ -53,6 +46,11 @@ public class EnemyBrain : MonoBehaviour
         else
         {
             timebtwAttack -= Time.deltaTime;
+        }
+        if (collision.transform.tag == "BulletFriend")
+        {
+            hp-=2;
+            Destroy(collision.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

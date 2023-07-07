@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MovmentScript : MonoBehaviour
 {
     public float moveSpeed = 5f,health;
-    public GameObject pickUpText;
+    public GameObject pickUpText, portalText;
     public Transform weaponPoint;
     private void Update()
     {
@@ -15,6 +15,10 @@ public class MovmentScript : MonoBehaviour
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f) * moveSpeed;
         transform.position += movement * Time.deltaTime;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -29,9 +33,16 @@ public class MovmentScript : MonoBehaviour
                 curWeapon.rotation = weaponPoint.rotation;
                 curWeapon.tag = "Untagged";
                 pickUpText.SetActive(false);
+            }
+        }    
+        if(collision.CompareTag("Portal"))
+        {
+            portalText.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
 
             }
-        }         
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -40,4 +51,5 @@ public class MovmentScript : MonoBehaviour
             pickUpText.SetActive(false);
         }
     }
+    
 }
